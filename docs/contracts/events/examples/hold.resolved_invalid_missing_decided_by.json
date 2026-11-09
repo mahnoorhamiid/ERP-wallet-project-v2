@@ -1,0 +1,15 @@
+{
+  "event_id": "77777777-7777-7777-7777-777777777777",
+  "event_type": "hold.resolved",
+  "event_version": "1.0",
+  "occurred_at": "2026-11-10T11:00:00Z",
+  "producer": "compliance",
+  "correlation_id": "22222222-2222-2222-2222-222222222222",
+  "causation_id": null,
+  "data": {
+    "transfer_id": "33333333-3333-3333-3333-333333333333",
+    "alert_id": "88888888-8888-8888-8888-888888888888",
+    "decision": "REJECT",
+    "decided_at": "2026-11-10T11:00:00Z"
+  }
+}

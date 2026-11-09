@@ -1,0 +1,16 @@
+{
+  "event_id": "66666666-6666-6666-6666-666666666666",
+  "event_type": "rail.settlement_confirmed",
+  "event_version": "1.0",
+  "occurred_at": "2026-11-10T10:10:00Z",
+  "producer": "rail-mock",
+  "correlation_id": "22222222-2222-2222-2222-222222222222",
+  "causation_id": null,
+  "data": {
+    "transfer_id": "33333333-3333-3333-3333-333333333333",
+    "rail_reference": "RAIL-12345",
+    "amount_minor": 100000,
+    "status": "MAYBE",
+    "settled_at": "2026-11-10T10:10:00Z"
+  }
+}
