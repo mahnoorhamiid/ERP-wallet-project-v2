@@ -115,6 +115,7 @@ def _handle_initiated(s, env):
         transition(s, t.transfer_id, "REJECTED", "REJECT", eid); s.commit()
         return snapshot(s.get(models.Transfer, t.transfer_id))
     if decision == "HOLD":
+        t.hold_reason_code = r.json().get("reason_code", "HOLD")
         transition(s, t.transfer_id, "ON_HOLD", "HOLD", eid); s.commit()
         return snapshot(s.get(models.Transfer, t.transfer_id))
 
