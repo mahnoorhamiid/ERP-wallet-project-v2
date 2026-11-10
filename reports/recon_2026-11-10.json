@@ -1,0 +1,33 @@
+{
+  "summary": {
+    "date": "2026-11-10",
+    "run_id": "90408138-60ce-49b7-83ad-2ea12b3586b5",
+    "total_ledger": 4,
+    "total_rail": 1,
+    "matched": 0,
+    "breaks": 4,
+    "matched_value_minor": 0,
+    "by_type": {
+      "MISSING_AT_RAIL": 3,
+      "AMOUNT_MISMATCH": 1
+    }
+  },
+  "details": [
+    {
+      "transfer_id": "tx-001",
+      "type": "MISSING_AT_RAIL"
+    },
+    {
+      "transfer_id": "tx-002",
+      "type": "MISSING_AT_RAIL"
+    },
+    {
+      "transfer_id": "tx-003",
+      "type": "MISSING_AT_RAIL"
+    },
+    {
+      "transfer_id": "tx-999",
+      "type": "AMOUNT_MISMATCH"
+    }
+  ]
+}

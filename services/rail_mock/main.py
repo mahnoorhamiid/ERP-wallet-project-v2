@@ -60,3 +60,11 @@ def report(date: str):
         if r.get("settled_at") and r["settled_at"].startswith(date):
             rows.append({"transfer_id": tid, **r})
     return {"date": date, "rows": rows}
+@app.post("/rail/admin/inject-break")
+def inject(transfer_id: str, kind: str):
+    if kind == "delete_row":
+        STORE.pop(transfer_id, None)
+    elif kind == "tamper_amount":
+        if transfer_id in STORE:
+            STORE[transfer_id]["tampered_amount_minor"] = 999
+    return {"ok": True}
