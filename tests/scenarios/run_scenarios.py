@@ -76,6 +76,41 @@ else:
     print("S03 FAILED")
 
 
+print("\n--- SCENARIO S04: Reconciliation Break ---")
+# 1. Create a successful transfer
+payload = {
+    "event_id": str(uuid.uuid4()),
+    "event_type": "transfer.initiated",
+    "correlation_id": "corr-s04",
+    "data": {
+        "transfer_id": f"tx-s04-{uuid.uuid4().hex[:4]}",
+        "sender_wallet_id": "W-DEMO001",
+        "receiver_wallet_id": "W-DEMO002",
+        "amount_minor": 1000000,
+        "currency": "PKR"
+    }
+}
+res = post_event(payload)
+tid = res['transfer_id']
+print(f"Transfer State: {res['state']}")
+
+# 2. Tamper with the rail
+httpx.post(f"{RAIL_URL}/rail/admin/inject-break?transfer_id={tid}&kind=tamper_amount")
+
+# 3. Run recon directly via Python import
+import subprocess
+import json
+print("Running Reconciliation...")
+recon_out = subprocess.check_output(["python", "-m", "services.txn.recon", "--date", "2026-11-10"]).decode("utf-8")
+recon_json = json.loads(recon_out)
+
+breaks = recon_json["by_type"].get("AMOUNT_MISMATCH", 0)
+if breaks > 0:
+    print("✅ S04 PASSED: Recon engine caught the AMOUNT_MISMATCH break.")
+else:
+    print("❌ S04 FAILED: Recon missed the break.")
+
+
 print("\n--- SCENARIO S05: Compliance Hold ---")
 bal_before = get_balance("W-DEMO001")
 payload = {

@@ -1,14 +1,14 @@
 {
   "summary": {
     "date": "2026-11-10",
-    "run_id": "90408138-60ce-49b7-83ad-2ea12b3586b5",
-    "total_ledger": 4,
-    "total_rail": 1,
-    "matched": 0,
-    "breaks": 4,
-    "matched_value_minor": 0,
+    "run_id": "37f79ed0-39b3-4d83-b723-f24b5421df6b",
+    "total_ledger": 14,
+    "total_rail": 2,
+    "matched": 6,
+    "breaks": 8,
+    "matched_value_minor": 500000,
     "by_type": {
-      "MISSING_AT_RAIL": 3,
+      "MISSING_AT_RAIL": 7,
       "AMOUNT_MISMATCH": 1
     }
   },
@@ -27,6 +27,22 @@
     },
     {
       "transfer_id": "tx-999",
+      "type": "MISSING_AT_RAIL"
+    },
+    {
+      "transfer_id": "tx-s03-2093",
+      "type": "MISSING_AT_RAIL"
+    },
+    {
+      "transfer_id": "tx-s03-f6c7",
+      "type": "MISSING_AT_RAIL"
+    },
+    {
+      "transfer_id": "tx-s03-24d0",
+      "type": "MISSING_AT_RAIL"
+    },
+    {
+      "transfer_id": "tx-s04-5240",
       "type": "AMOUNT_MISMATCH"
     }
   ]

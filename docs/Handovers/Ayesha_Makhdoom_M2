@@ -1,0 +1,18 @@
+# M2 Handover Note - Transaction Service
+
+## Completed Today (9 Nov)
+- Implemented SQLite database schema (Models)
+- Built the Transfer State Machine with optimistic locking
+- Built the double-entry Ledger with overdraft protection
+- Built the API Orchestrator (FastAPI)
+- Built the Rail Mock and Compliance Mock
+- Built the Reconciliation engine
+- Automated Scenario Tests (S02, S03, S05) all passing.
+
+## Not Done / Todo
+- S04 Recon Break testing (partially done manually, needs automated test)
+- Recovery loop (startup recovery is done, background 30s loop is pending)
+- Dossier documentation (stubs created)
+
+## Blockers
+- None.

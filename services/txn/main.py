@@ -8,10 +8,32 @@ import httpx
 import os
 import uuid
 import sqlite3
+import asyncio
+from datetime import timedelta
 from libs.common.outbox import init_outbox
 
 COMPLIANCE_URL = os.getenv("COMPLIANCE_URL", "http://127.0.0.1:8002")
 RAIL_URL = os.getenv("RAIL_URL", "http://127.0.0.1:8004")
+
+async def _recovery_loop():
+    """Background task to find and fix stuck transfers."""
+    while True:
+        await asyncio.sleep(30) # Run every 30 seconds
+        try:
+            s = SessionLocal()
+            cutoff = now() - timedelta(seconds=10)
+            stuck = s.execute(select(models.Transfer).where(
+                models.Transfer.state == "DEBITED",
+                models.Transfer.updated_at < cutoff)).scalars().all()
+            
+            for t in stuck:
+                print(f"[RECOVERY] Found stuck transfer {t.transfer_id}. Attempting to settle...")
+                # We call the rail function to check if it actually settled or failed
+                _call_rail_and_settle(s, t, t.transfer_id) 
+                
+            s.close()
+        except Exception as e:
+            print(f"[RECOVERY ERROR] {e}")
 
 @asynccontextmanager
 async def lifespan(app):
@@ -22,7 +44,13 @@ async def lifespan(app):
     init_outbox(conn)
     conn.close()
     
+    # Start background recovery loop
+    recovery_task = asyncio.create_task(_recovery_loop())
+    
     yield
+    
+    # Cancel background loop on shutdown
+    recovery_task.cancel()
 
 app = FastAPI(lifespan=lifespan)
 
