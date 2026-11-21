@@ -1,0 +1,14 @@
+{"transfer_id": "TXN101", "decision": "ALLOW", "reason_code": null, "timestamp": "2026-11-21T10:39:19.299836+00:00"}
+{"transfer_id": "TXN102", "decision": "HOLD", "reason_code": "LARGE_AMOUNT", "timestamp": "2026-11-21T10:39:36.226128+00:00"}
+{"transfer_id": "TXN102", "decision": "HOLD", "reason_code": "LARGE_AMOUNT", "timestamp": "2026-11-21T10:39:36.888248+00:00"}
+{"transfer_id": "TXN102", "decision": "HOLD", "reason_code": "KYC_NOT_VERIFIED", "timestamp": "2026-11-21T10:40:27.180658+00:00"}
+{"transfer_id": "TXN102", "decision": "HOLD", "reason_code": "KYC_NOT_VERIFIED", "timestamp": "2026-11-21T10:41:30.389396+00:00"}
+{"transfer_id": "TXN201", "decision": "ALLOW", "reason_code": null, "timestamp": "2026-11-21T10:45:44.972221+00:00"}
+{"transfer_id": "TEST001", "decision": "ALLOW", "reason_code": null, "timestamp": "2026-11-21T10:53:36.406220+00:00"}
+{"transfer_id": "TEST002", "decision": "HOLD", "reason_code": "KYC_NOT_VERIFIED", "timestamp": "2026-11-21T10:53:36.407220+00:00"}
+{"transfer_id": "TEST003", "decision": "HOLD", "reason_code": "AML_ALERT", "timestamp": "2026-11-21T10:53:36.408220+00:00"}
+{"transfer_id": "TEST004", "decision": "HOLD", "reason_code": "LARGE_AMOUNT", "timestamp": "2026-11-21T10:53:36.409220+00:00"}
+{"transfer_id": "TEST101", "decision": "ALLOW", "reason_code": null, "timestamp": "2026-11-21T10:57:19.069923+00:00"}
+{"transfer_id": "TEST102", "decision": "HOLD", "reason_code": "AML_ALERT", "timestamp": "2026-11-21T10:58:04.058744+00:00"}
+{"transfer_id": "TEST103", "decision": "HOLD", "reason_code": "KYC_NOT_VERIFIED", "timestamp": "2026-11-21T10:58:41.181659+00:00"}
+{"transfer_id": "TEST104", "decision": "HOLD", "reason_code": "LARGE_AMOUNT", "timestamp": "2026-11-21T10:59:18.148255+00:00"}
