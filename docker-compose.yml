@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: wallet_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - wallet-network
+
+  gateway:
+    build: 
+      context: .
+      dockerfile: services/gateway/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/wallet_db
+    depends_on:
+      - db
+    networks:
+      - wallet-network
+
+  txn:
+    build:
+      context: .
+      dockerfile: services/txn/Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/wallet_db
+    depends_on:
+      - db
+    networks:
+      - wallet-network
+
+  compliance:
+    build:
+      context: .
+      dockerfile: services/compliance/Dockerfile
+    ports:
+      - "8002:8002"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/wallet_db
+    depends_on:
+      - db
+    networks:
+      - wallet-network
+      - ai-network # Compliance needs to talk to AI
+
+  ai-triage:
+    build:
+      context: .
+      dockerfile: services/ai_triage/Dockerfile
+    ports:
+      - "8003:8003"
+    environment:
+      - AI_DB_PATH=/data/ai_triage.db
+      - AI_ABSTAIN_THRESHOLD=0.75
+    networks:
+      - ai-network # AI is ONLY on this isolated network
+
+networks:
+  wallet-network:
+    driver: bridge
+  ai-network:
+    driver: bridge # The isolated network for M4's AI
+
+volumes:
+  postgres_data:
