@@ -1,0 +1,34 @@
+{
+  "wallets": [
+    {
+      "wallet_id": "W-DEMO01",
+      "name": "Demo User 1",
+      "phone": "03000000001",
+      "balance_minor": 100000000
+    },
+    {
+      "wallet_id": "W-DEMO02",
+      "name": "Demo User 2",
+      "phone": "03000000002",
+      "balance_minor": 100000000
+    },
+    {
+      "wallet_id": "W-DEMO03",
+      "name": "Demo User 3",
+      "phone": "03000000003",
+      "balance_minor": 100000000
+    },
+    {
+      "wallet_id": "W-DEMO04",
+      "name": "Demo User 4",
+      "phone": "03000000004",
+      "balance_minor": 100000000
+    },
+    {
+      "wallet_id": "W-DEMO05",
+      "name": "Demo User 5",
+      "phone": "03000000005",
+      "balance_minor": 100000000
+    }
+  ]
+}
