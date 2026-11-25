@@ -137,7 +137,6 @@ python -m services.txn.recon --date (Get-Date).ToUniversalTime().ToString("yyyy-
 
 - Running bare `pytest` stops at collection: `scripts/test_api.py` needs the undeclared `requests` package.
 - `tests/test_ledger.py` requires an empty database.
-- S04 in `run_scenarios.py` uses a hardcoded date and fails on other days. The reconciliation command above works.
 
 ## Configuration
 
