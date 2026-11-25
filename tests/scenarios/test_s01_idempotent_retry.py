@@ -49,4 +49,4 @@ def test_same_key_different_body_returns_422_key_reused():
 def test_missing_idempotency_key_returns_400():
     r = client.post("/v1/transfers", json=_body(), headers={"Authorization": "Bearer fake"})
     assert r.status_code == 400
-    assert r.json()["detail"]["code"] == "MISSING_IDEMPOTENCY_KEY"python -m pytest tests/scenarios/test_s01_idempotent_retry.py -v
+    assert r.json()["detail"]["code"] == "MISSING_IDEMPOTENCY_KEY"

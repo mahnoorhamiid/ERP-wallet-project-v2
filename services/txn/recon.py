@@ -44,7 +44,7 @@ def run_recon(date: str):
             if t.state == "COMPLETED":
                 if not r: 
                     breaks.append((tid, "MISSING_AT_RAIL", t, None))
-                elif r.get("tampered_amount_minor", t.amount_minor) != t.amount_minor:
+                elif r.get("amount_minor") != t.amount_minor:
                     breaks.append((tid, "AMOUNT_MISMATCH", t, r))
                 elif r["status"] != "SETTLED": 
                     breaks.append((tid, "STATUS_MISMATCH", t, r))

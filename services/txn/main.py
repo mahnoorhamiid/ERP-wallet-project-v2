@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy import select, text
+from sqlalchemy.exc import IntegrityError
 from services.txn.db import init_db, SessionLocal
 from services.txn import models, ledger
 from libs.common.clock import now
@@ -113,14 +114,31 @@ def ingest_event(envelope: dict, s=Depends(db)):
     s.commit()
     return snap
 
+def _existing_transfer(t, d):
+    """Return the prior result for a repeated transfer_id; 409 if the payload differs."""
+    fields = ("sender_wallet_id", "receiver_wallet_id", "amount_minor", "currency")
+    if any(getattr(t, f) != d[f] for f in fields):
+        raise HTTPException(409, "TRANSFER_ID_CONFLICT")
+    return snapshot(t)
+
 def _handle_initiated(s, env):
     from services.txn.state_machine import transition
     d = env["data"]; corr = env["correlation_id"]; eid = env["event_id"]
     
+    existing = s.get(models.Transfer, d["transfer_id"])
+    if existing: return _existing_transfer(existing, d)
+
     t = models.Transfer(transfer_id=d["transfer_id"], sender_wallet_id=d["sender_wallet_id"],
         receiver_wallet_id=d["receiver_wallet_id"], amount_minor=d["amount_minor"], currency=d["currency"],
         state="INITIATED", version=0, correlation_id=corr, created_at=now(), updated_at=now())
-    s.add(t); s.flush()
+    s.add(t)
+    try:
+        s.flush()
+    except IntegrityError:  # a concurrent delivery inserted it first
+        s.rollback()
+        existing = s.get(models.Transfer, d["transfer_id"])
+        if existing is None: raise
+        return _existing_transfer(existing, d)
 
     if ledger.get_balance(s, t.sender_wallet_id) < 0:
         transition(s, t.transfer_id, "FAILED", "WALLET_NOT_FOUND", eid); s.commit()

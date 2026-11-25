@@ -36,14 +36,17 @@ async def settle(req: SettleReq, x_mock_rail_mode: str | None = Header(None)):
     
     if m == "REJECT":
         STORE[req.transfer_id] = {"rail_reference": ref, "status": "REJECTED",
+            "amount_minor": req.amount_minor,
             "reason_code": "RAIL_REJECT", "settled_at": None}
     elif m == "TIMEOUT_BUT_SETTLED":
         STORE[req.transfer_id] = {"rail_reference": ref, "status": "PENDING",
+            "amount_minor": req.amount_minor,
             "reason_code": None, "settled_at": None}
         await asyncio.sleep(10)
         raise HTTPException(504, "timeout")
     else:
         STORE[req.transfer_id] = {"rail_reference": ref, "status": "SETTLED",
+            "amount_minor": req.amount_minor,
             "reason_code": None,
             "settled_at": datetime.now(timezone.utc).isoformat().replace("+00:00","Z")}
             
@@ -66,5 +69,5 @@ def inject(transfer_id: str, kind: str):
         STORE.pop(transfer_id, None)
     elif kind == "tamper_amount":
         if transfer_id in STORE:
-            STORE[transfer_id]["tampered_amount_minor"] = 999
+            STORE[transfer_id]["amount_minor"] = 999
     return {"ok": True}
