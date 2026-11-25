@@ -1,0 +1,20 @@
+{
+  "summary": {
+    "date": "2026-11-25",
+    "run_id": "eb707ddc-84f8-476c-a7bf-c2a614fc19f4",
+    "total_ledger": 3,
+    "total_rail": 2,
+    "matched": 2,
+    "breaks": 1,
+    "matched_value_minor": 500000,
+    "by_type": {
+      "AMOUNT_MISMATCH": 1
+    }
+  },
+  "details": [
+    {
+      "transfer_id": "f204978e-d5c5-4d40-92d9-8ac68f72a706",
+      "type": "AMOUNT_MISMATCH"
+    }
+  ]
+}
